@@ -504,9 +504,13 @@ void NimBLEDevice::stopAdvertising() {
 
         ESP_ERROR_CHECK(errRc);
 
-        ESP_ERROR_CHECK(esp_nimble_hci_and_controller_init());
 
-        nimble_port_init();
+
+
+        //ESP_ERROR_CHECK(esp_nimble_init());
+        //ESP_ERROR_CHECK(esp_nimble_hci_init());
+
+        ESP_ERROR_CHECK(nimble_port_init());
 
         // Setup callbacks for host events
         ble_hs_cfg.reset_cb = NimBLEDevice::onReset;
@@ -549,7 +553,7 @@ void NimBLEDevice::stopAdvertising() {
     if (ret == 0) {
         nimble_port_deinit();
 
-        ret = esp_nimble_hci_and_controller_deinit();
+        ret = esp_nimble_hci_deinit();
         if (ret != ESP_OK) {
             NIMBLE_LOGE(LOG_TAG, "esp_nimble_hci_and_controller_deinit() failed with error: %d", ret);
         }

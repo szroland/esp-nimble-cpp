@@ -40,6 +40,71 @@
  /* ************************* */
 
 
+//TODO: review this against ble_hs_adv_fields
+struct ble_hs_adv_fields_rw {
+    /*** 0x01 - Flags. */
+    uint8_t flags;
+
+    /*** 0x02,0x03 - 16-bit service class UUIDs. */
+    ble_uuid16_t *uuids16;
+    uint8_t num_uuids16;
+    unsigned uuids16_is_complete:1;
+
+    /*** 0x04,0x05 - 32-bit service class UUIDs. */
+    ble_uuid32_t *uuids32;
+    uint8_t num_uuids32;
+    unsigned uuids32_is_complete:1;
+
+    /*** 0x06,0x07 - 128-bit service class UUIDs. */
+    ble_uuid128_t *uuids128;
+    uint8_t num_uuids128;
+    unsigned uuids128_is_complete:1;
+
+    /*** 0x08,0x09 - Local name. */
+    const uint8_t *name;
+    uint8_t name_len;
+    unsigned name_is_complete:1;
+
+    /*** 0x0a - Tx power level. */
+    int8_t tx_pwr_lvl;
+    unsigned tx_pwr_lvl_is_present:1;
+
+    /*** 0x0d - Slave connection interval range. */
+    const uint8_t *slave_itvl_range;
+
+    /*** 0x16 - Service data - 16-bit UUID. */
+    const uint8_t *svc_data_uuid16;
+    uint8_t svc_data_uuid16_len;
+
+    /*** 0x17 - Public target address. */
+    const uint8_t *public_tgt_addr;
+    uint8_t num_public_tgt_addrs;
+
+    /*** 0x19 - Appearance. */
+    uint16_t appearance;
+    unsigned appearance_is_present:1;
+
+    /*** 0x1a - Advertising interval. */
+    uint16_t adv_itvl;
+    unsigned adv_itvl_is_present:1;
+
+    /*** 0x20 - Service data - 32-bit UUID. */
+    const uint8_t *svc_data_uuid32;
+    uint8_t svc_data_uuid32_len;
+
+    /*** 0x21 - Service data - 128-bit UUID. */
+    const uint8_t *svc_data_uuid128;
+    uint8_t svc_data_uuid128_len;
+
+    /*** 0x24 - URI. */
+    const uint8_t *uri;
+    uint8_t uri_len;
+
+    /*** 0xff - Manufacturer specific data. */
+    const uint8_t *mfg_data;
+    uint8_t mfg_data_len;
+};
+
 /**
  * @brief Advertisement data set by the programmer to be published by the %BLE server.
  */
@@ -96,8 +161,8 @@ private:
     void                    onHostReset();
     static int              handleGapEvent(struct ble_gap_event *event, void *arg);
 
-    ble_hs_adv_fields       m_advData;
-    ble_hs_adv_fields       m_scanData;
+    ble_hs_adv_fields_rw       m_advData;
+    ble_hs_adv_fields_rw       m_scanData;
     ble_gap_adv_params      m_advParams;
     std::vector<NimBLEUUID> m_serviceUUIDs;
     bool                    m_customAdvData;

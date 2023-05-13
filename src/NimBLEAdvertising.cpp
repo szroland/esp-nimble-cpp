@@ -377,14 +377,16 @@ void NimBLEAdvertising::start(uint32_t duration, void (*advCompleteCB)(NimBLEAdv
         }
 
         if(m_scanResp) {
-            rc = ble_gap_adv_rsp_set_fields(&m_scanData);
+            //TODO: review cast
+            rc = ble_gap_adv_rsp_set_fields((ble_hs_adv_fields *)&m_scanData);
             if (rc != 0) {
                 NIMBLE_LOGC(LOG_TAG, "error setting scan response data; rc=%d, %s", rc, NimBLEUtils::returnCodeToString(rc));
                 abort();
             }
         }
 
-        rc = ble_gap_adv_set_fields(&m_advData);
+        //TODO: review cast
+        rc = ble_gap_adv_set_fields((ble_hs_adv_fields *)&m_advData);
         if (rc != 0) {
             NIMBLE_LOGC(LOG_TAG, "error setting advertisement data; rc=%d, %s", rc, NimBLEUtils::returnCodeToString(rc));
             abort();

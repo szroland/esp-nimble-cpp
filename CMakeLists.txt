@@ -26,4 +26,4 @@ idf_component_register(SRCS "src/FreeRTOS.cpp"
                             "src/NimBLEUtils.cpp"
                             "src/NimBLEUUID.cpp"
                   INCLUDE_DIRS "src"
-                  REQUIRES bt)
+                  REQUIRES bt esp_ringbuf nvs_flash)
