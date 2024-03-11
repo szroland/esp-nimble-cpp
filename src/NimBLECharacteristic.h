@@ -45,6 +45,7 @@ typedef enum {
 
 #include <string>
 #include <vector>
+#include <ctime>
 
 class NimBLEService;
 class NimBLEDescriptor;
