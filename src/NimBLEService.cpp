@@ -143,6 +143,7 @@ bool NimBLEService::start() {
             // of the characteristics for the service. We create 1 extra and set it to null
             // for this purpose.
             pChr_a = new ble_gatt_chr_def[numChrs+1];
+            memset(pChr_a, 0, sizeof(ble_gatt_chr_def) * (numChrs+1));
             NimBLECharacteristic* pCharacteristic = *m_chrVec.begin();
 
             for(uint8_t i=0; i < numChrs;) {
@@ -183,7 +184,7 @@ bool NimBLEService::start() {
         }
 
         // end of services must indicate to api with type = 0
-        svc[1].type = 0;
+        svc[1].type = BLE_GATT_SVC_TYPE_END;
         m_pSvcDef = svc;
     }
 
